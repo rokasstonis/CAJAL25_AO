@@ -1,11 +1,11 @@
 import numpy as np
 from pathlib import Path
+from settings.settings import exp_dir
 import os
 
-from settings.settings import Settings
 
 def generate_yaml_file(mXLocationPixels, mYLocationPixels, mPowerDensity, mRadiusPixels):
-    output_path = Settings.path / "output_regions.yaml"
+    output_path = exp_dir / "output_regions.yaml"
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(output_path, "w") as f:
