@@ -1,0 +1,50 @@
+---
+StartClass:
+  ClassName: CStimulationRegionSpecification
+  mPowerDensity: 10
+  mRadiusPixels: 7
+  mXLocationPixels: 233
+  mYLocationPixels: 76
+  mZPlane: 0
+EndClass: CStimulationRegionSpecification
+StartClass:
+  ClassName: CStimulationRegionSpecification
+  mPowerDensity: 10
+  mRadiusPixels: 6
+  mXLocationPixels: 247
+  mYLocationPixels: 191
+  mZPlane: 0
+EndClass: CStimulationRegionSpecification
+StartClass:
+  ClassName: CStimulationRegionSpecification
+  mPowerDensity: 10
+  mRadiusPixels: 5
+  mXLocationPixels: 262
+  mYLocationPixels: 44
+  mZPlane: 0
+EndClass: CStimulationRegionSpecification
+StartClass:
+  ClassName: CStimulationRegionSpecification
+  mPowerDensity: 10
+  mRadiusPixels: 7
+  mXLocationPixels: 237
+  mYLocationPixels: 332
+  mZPlane: 0
+EndClass: CStimulationRegionSpecification
+StartClass:
+  ClassName: CStimulationRegionSpecification
+  mPowerDensity: 10
+  mRadiusPixels: 7
+  mXLocationPixels: 269
+  mYLocationPixels: 134
+  mZPlane: 0
+EndClass: CStimulationRegionSpecification
+StartClass:
+  ClassName: CStimulationRegionSpecification
+  mPowerDensity: 10
+  mRadiusPixels: 7
+  mXLocationPixels: 232
+  mYLocationPixels: 297
+  mZPlane: 0
+EndClass: CStimulationRegionSpecification
+...
