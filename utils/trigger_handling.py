@@ -1,8 +1,6 @@
 import numpy as np
 from pathlib import Path
-import settings
-
-stim_trigs=r"C:\Users\Phd Programme\Documents\CAJAL25\Example_data\Stimulation laser modulation waveform (20250618_15_28).txt"
+from settings.settings import imaging_frame_rate
 
 def get_stim_frames(txt_file):
     data = np.loadtxt(txt_file)
@@ -10,7 +8,7 @@ def get_stim_frames(txt_file):
     values = data[:, 1]
     stim_onsets = np.where(values > 0)[0]
 
-    frames = convert_to_frames(stim_onsets, frame_rate=settings.imaging_frame_rate)
+    frames = convert_to_frames(stim_onsets, frame_rate=imaging_frame_rate)
 
     return frames
 
@@ -29,4 +27,3 @@ def convert_to_frames(timestamps, frame_rate=43.2):
 
 # print()
 
-print(get_stim_frames(stim_trigs))
