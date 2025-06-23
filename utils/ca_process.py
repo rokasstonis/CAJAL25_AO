@@ -1,5 +1,6 @@
 import numpy as np
 from settings.settings import neuropil_correction, cells_only
+from scipy.interpolate import interp1d
 import os
 
 def load_s2p_files(dp_s2p, neuropil_cor=neuropil_correction):
@@ -82,3 +83,22 @@ def get_curated_cells(iscell):
         sorted = np.arange(len(iscell))
     return sorted
 
+
+#interpolate the blank out periods
+def interpolate_blanked_periods(FNc, stim_mask):
+    """
+    Interpolates over blanked (False) periods in calcium traces for multiple cells.
+    Parameters:
+        FNc: 2D numpy array (cells x frames), the calcium traces.
+        stim_mask: 1D boolean numpy array, True where data is valid, False where blanked. False for stimmed frames. 
+    Returns:
+        interp_FNc: 2D numpy array, with blanked periods linearly interpolated for each cell.
+    """
+    interp_FNc = FNc.copy()
+    x = np.arange(FNc.shape[1])
+    valid_idx = np.where(stim_mask)[0]
+    blanked_idx = np.where(~stim_mask)[0]
+    if len(blanked_idx) > 0 and len(valid_idx) > 1:
+        for i in range(FNc.shape[0]):
+            interp_FNc[i, ~stim_mask] = np.interp(blanked_idx, valid_idx, FNc[i, stim_mask])
+    return interp_FNc
