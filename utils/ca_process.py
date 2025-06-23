@@ -1,7 +1,8 @@
 import numpy as np
+from settings.settings import neuropil_correction, cells_only
 import os
 
-def load_s2p_files(dp_s2p, neuropil_correction):
+def load_s2p_files(dp_s2p, neuropil_cor=neuropil_correction):
     """ this function loads the suite2p output files 
     #can refine this to load only a subset of files 
     https://mouseland.github.io/suite2p/_build/html/outputs.html 
@@ -16,28 +17,32 @@ def load_s2p_files(dp_s2p, neuropil_correction):
     stat = np.load('stat.npy', allow_pickle=True)
     Fneu = np.load('Fneu.npy')
 
-    if neuropil_correction > 0: 
-        F = F-Fneu*neuropil_correction
+    if neuropil_cor > 0: 
+        F = F-Fneu*neuropil_cor
         for idx,i in enumerate(F): 
             F[idx] = i-np.min(i)
     return F, Spks, ops,iscell,stat,Fneu
 
-def preprocess_imaging(iscell, F, stat, FOVsizeum, mode):
+def preprocess_imaging(dp_s2p, mode):
     """ 'Gives you dff for cells of interest and stim triggers 
     Paramters: iscell, F, stat, FOVsizeum, dp_StimF, mode (median or 10% median dff)
     Returns: FNc, iscell_list, x,y, StimFs
     
     '"""
-    iscell_list = get_curated_cells(iscell)
-    Fc = F[iscell_list] 
+    F, Spks, ops,iscell,stat,Fneu = load_s2p_files(dp_s2p)
+
+    if cells_only:
+        iscell_list = get_curated_cells(iscell) ###################
+        Fc = F[iscell_list] 
+    else:
+        Fc = F
+        iscell_list = np.arange(len(F))
     if mode == 'median':
         FNc = dff_median(Fc)
     elif mode == '10': 
         FNc = dff_10percent(Fc)
-    x, y = get_cell_centroids(stat, iscell_list)
-    xa = [i*(FOVsizeum/512) for i in x]
-    yb = [i*(FOVsizeum/512) for i in y]
-    return FNc, iscell_list, xa,yb, x,y
+    coords = get_cell_centroids(stat, iscell_list)
+    return FNc, iscell_list, coords
 
 def dff_10percent(traces): 
     """ this function calculates the dff using the 10% median method for the baseline.
@@ -64,9 +69,16 @@ def dff_median(traces):
 
 def get_cell_centroids(stat, index_list):
     #this function finds the x and y centroids from the stat file from suite2p 
-    x,y = zip(*[(stat[i]['med'][1], stat[i]['med'][0]) for i in index_list])
-    return x,y
+    coords = np.array([(stat[i]['med'][1], stat[i]['med'][0]) for i in index_list])
+    return coords.T  # shape will be (2, N) - {x, y} for each cell
 
 def get_curated_cells(iscell): 
-    return np.where(iscell[:,0] == 1)[0]
+    """ this function returns the indices of the cells that are curated (iscell[:,0] == 1)
+    Parameters: iscell (from suite2p)
+    Returns: indices of curated cells """
+    if cells_only:
+        sorted=np.where(iscell[:,0] == 1)[0]
+    else:
+        sorted = np.arange(len(iscell))
+    return sorted
 

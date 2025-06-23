@@ -17,13 +17,6 @@ def convert_to_frames(timestamps, frame_rate=43.2):
     """
     Convert timestamps in ms to frame indices based on the given frame rate.
     """
-    frame_rate = 43.2  # Hz
+    # frame_rate = 43.2  # Hz
     return np.round(timestamps/1000 * frame_rate).astype(int)
-
-
-# timestamps, values = load_stim_triggers(stim_trigs)
-
-# stim_onsets = np.where(values > 0)[0]
-
-# print()
 
