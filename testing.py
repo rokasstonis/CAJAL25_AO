@@ -6,12 +6,7 @@ from settings.settings import dff_mode, imaging_frame_rate
 import matplotlib.pyplot as plt
 import numpy as np
 
-# length = 10  # or any desired length
-# mXLocationPixels = np.random.randint(0, 513, length)
-# mYLocationPixels = np.random.randint(0, 513, length)
 
-
-# generate_yaml_file(mXLocationPixels, mYLocationPixels, 10, 15)
 
 
 dp_s2p = r'C:\Users\TeachingLab\Desktop\behavior-analysis\data\suite2p_outputs_20250625'
@@ -27,6 +22,25 @@ plt.title('FNc traces for all ROIs')
 plt.yticks([])
 plt.tight_layout()
 plt.show()
+
+# Things left to do:
+# 1) Create the rate maps for the cell matrix with the activity signal of your choice (spikes or dF/F).
+# 2) Create the rate maps for the cell matrix with the speed signal.
+# 3) Run the place cell detection with shuffled rate maps.
+# 4) Analyse the stimulation effects. 
+# 5) Plot the results.
+
+
+
+#####junk code for testing
+
+
+# length = 10  # or any desired length
+# mXLocationPixels = np.random.randint(0, 513, length)
+# mYLocationPixels = np.random.randint(0, 513, length)
+
+
+# generate_yaml_file(mXLocationPixels, mYLocationPixels, 10, 15)
 
 
 # num_traces = interpolated_traces.shape[0]
