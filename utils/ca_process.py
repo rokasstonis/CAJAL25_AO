@@ -1,6 +1,6 @@
 import numpy as np
 from settings.settings import neuropil_correction, cells_only
-from scipy.interpolate import interp1d
+# from scipy.interpolate import interp1d
 import os
 
 def load_s2p_files(dp_s2p, neuropil_cor=neuropil_correction):
