@@ -4,12 +4,9 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
-# %%
-# pip install harp-python
-# pip install matplotlib
-
-DATA_ROOT = (r"C:\Users\Phd Programme\Downloads\data")
-reader = harp.create_reader(DATA_ROOT / "behavior.harp", keep_type=True)
+DATA_ROOT_up = Path(r"C:\Users\Phd Programme\Downloads\data\SessionTest_20250623T160649")
+DATA_ROOT = Path(r"C:\Users\Phd Programme\Downloads\data\SessionTest_20250623T160649\behavior.harp")
+reader = harp.create_reader(DATA_ROOT)
 
 # %% Goals for analysis
 # 1. Plot trial trajectory
@@ -21,8 +18,8 @@ reader = harp.create_reader(DATA_ROOT / "behavior.harp", keep_type=True)
 
 # %% Trial Trajectory + Time of reward
 
-trial_number = pd.read_csv(DATA_ROOT / "trial-number0.csv")
-current_position = pd.read_csv(DATA_ROOT / "current-position.csv")
+trial_number = pd.read_csv(DATA_ROOT_up / "trial-number0.csv")
+current_position = pd.read_csv(DATA_ROOT_up / "current-position.csv")
 
 max_trial = trial_number["Value"].values[-1]
 
